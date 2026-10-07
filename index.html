@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="tel_lement addict : campagne de sensibilisation sur l'emprise des algorithmes des réseaux sociaux. Ne laissez pas l'algo scroller votre vie.">
+<meta property="og:title" content="tel_lement addict">
+<meta property="og:description" content="Ne laissez pas l'algo scroller votre vie_">
+<meta name="theme-color" content="#0e0e10">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23d4ff3a'/%3E%3Ctext x='12' y='46' font-family='Arial Black,Arial' font-weight='900' font-size='40' fill='%230e0e10'%3Et%3C/text%3E%3Crect x='36' y='40' width='18' height='7' fill='%23ff4a1c'/%3E%3C/svg%3E">
+<title>tel_lement addict</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;700;800;900&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+/* Layout : un fil vertical qui défile, section par section, et qui s'arrête net sur l'underscore. Nuit d'abord (l'écran à 23 h), Jour en option. */
+:root{
+--bg:#0e0e10; --raised:#1a1a1e; --fg:#f2efe8; --muted:#a3a09a; --line:#2e2e34; --line-strong:#6b6870;
+--notif:#ff4a1c; --on-notif:#0e0e10; --notif-text:#ff4a1c;
+--acide:#d4ff3a; --on-acide:#0e0e10;
+--calme:#2f6b57; --on-calme:#f2efe8;
+--focus:#d4ff3a;
+--sans:"Archivo","Helvetica Neue",Arial,sans-serif;
+--mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+color-scheme:dark;
+}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){
+--bg:#f2efe8; --raised:#ffffff; --fg:#0e0e10; --muted:#57554f; --line:#d6d2c8; --line-strong:#8a867d;
+--notif-text:#c7300a; --focus:#c7300a; color-scheme:light }}
+:root[data-theme="light"]{
+--bg:#f2efe8; --raised:#ffffff; --fg:#0e0e10; --muted:#57554f; --line:#d6d2c8; --line-strong:#8a867d;
+--notif-text:#c7300a; --focus:#c7300a; color-scheme:light }
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:17px;line-height:1.55;margin:0}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:clamp(16px,4vw,40px)}
+.mono{font-family:var(--mono)}
+.kicker{font-family:var(--mono);font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0}
+h1,h2,h3{margin:0;text-wrap:balance;letter-spacing:-.03em;line-height:.98}
+h2{font-weight:900;font-size:clamp(40px,6.5vw,76px)}
+h3{font-weight:800;font-size:24px;letter-spacing:-.01em;line-height:1.15}
+p{margin:0}
+.lead{font-size:clamp(18px,2vw,21px);max-width:60ch;color:var(--fg)}
+.mark{background:var(--acide);color:var(--on-acide);padding:0 .08em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.us{display:inline-block;width:.42em;height:.12em;margin-left:.05em;background:var(--notif);animation:blink 1.1s steps(1) infinite;vertical-align:baseline}
+@keyframes blink{50%{opacity:0}}
+/* wordmark */
+.wm{display:inline-flex;align-items:baseline;font-weight:900;letter-spacing:-.03em;line-height:1;white-space:nowrap;text-decoration:none;color:var(--fg)}
+.wm i{display:inline-block;width:.5em;height:.14em;background:var(--notif);margin:0 .04em 0 .05em}
+.wm b{margin-left:.22em;background:var(--acide);color:var(--on-acide);padding:.04em .1em .1em;font-weight:900}
+/* header */
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--bg);border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;align-items:center;gap:24px;padding-block:14px}
+header.top .wm{font-size:22px}
+nav{margin-left:auto;display:flex;gap:20px;flex-wrap:wrap}
+nav a{font-family:var(--mono);font-size:13px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;color:var(--muted)}
+nav a:hover{color:var(--fg)}
+@media (max-width:720px){nav{display:none}}
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:6px;border:2px solid transparent;padding:12px 22px;font:700 16px/20px var(--sans);text-decoration:none;cursor:pointer;transition:transform .12s ease,box-shadow .12s ease}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:2px 2px 0 var(--fg)}
+.btn-notif{background:var(--notif);color:var(--on-notif)}
+.btn-notif::after,.btn-calme::after{content:"_"}
+.btn-calme{background:var(--calme);color:var(--on-calme)}
+.btn-ghost{background:transparent;color:var(--fg);border-color:var(--line-strong)}
+section{padding-block:clamp(64px,10vw,120px);border-bottom:1px solid var(--line)}
+.head{display:flex;flex-direction:column;gap:16px;margin-bottom:48px}
+/* hero */
+.hero{padding-block:clamp(48px,8vw,96px) clamp(56px,8vw,96px)}
+.hero .grid{display:grid;grid-template-columns:1.35fr 1fr;gap:40px 48px;align-items:end}
+.hero .full{grid-column:1/-1;display:flex;flex-direction:column;gap:28px;min-width:0}
+.hero h1{font-weight:900;font-size:clamp(46px,10vw,136px);line-height:.9;letter-spacing:-.045em}
+.hero .side{display:flex;flex-direction:column;gap:24px;min-width:0}
+.hero .ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
+@media (max-width:860px){.hero .grid{grid-template-columns:1fr}}
+.notif{background:var(--raised);border:1px solid var(--line);border-radius:24px;padding:14px 18px 18px;box-shadow:0 14px 34px rgba(0,0,0,.28);transform:rotate(-2deg);max-width:380px}
+.notif .nh{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.notif .dot{width:9px;height:9px;border-radius:50%;background:var(--notif)}
+.notif .t{margin-left:auto}
+.notif strong{display:block;margin-top:8px;font-size:16px;line-height:1.3}
+.notif span.b{display:block;font-size:14px;color:var(--muted)}
+.notif.me{transform:rotate(1.5deg);margin-left:auto}
+/* constat */
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+@media (max-width:860px){.facts{grid-template-columns:1fr}}
+.big{font-weight:900;font-size:clamp(96px,16vw,190px);line-height:.85;letter-spacing:-.06em;color:var(--notif-text);font-variant-numeric:tabular-nums}
+.facts .rows{display:flex;flex-direction:column;border-top:2px solid var(--fg);margin-top:24px}
+.facts .rows p{padding-block:14px;border-bottom:1px solid var(--line);font-size:19px;font-weight:700}
+.facts .rows p span{display:block;font-weight:400;font-size:15px;color:var(--muted)}
+blockquote{margin:0;display:flex;flex-direction:column;gap:16px;min-width:0}
+blockquote p.q{font-size:clamp(28px,3.4vw,40px);font-weight:800;line-height:1.1;letter-spacing:-.02em}
+.props{display:flex;flex-direction:column;gap:10px;margin-top:8px}
+.props p{background:var(--raised);border-left:5px solid var(--notif);padding:14px 18px;font-weight:700}
+.src{font-family:var(--mono);font-size:12.5px;color:var(--muted);margin-top:28px}
+.src a{color:var(--muted)}
+/* mécanique */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+@media (max-width:860px){.cards{grid-template-columns:1fr}}
+.card{background:var(--raised);padding:28px;display:flex;flex-direction:column;gap:12px;border-top:6px solid var(--c,var(--notif));min-width:0}
+.card .tag{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.card p{color:var(--muted)}
+.inst{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:56px}
+@media (max-width:860px){.inst{grid-template-columns:1fr}}
+.inst div{border-top:2px solid var(--fg);padding-top:18px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.inst p{color:var(--muted)}
+.punch{margin-top:56px;background:var(--fg);color:var(--bg);padding:clamp(24px,4vw,40px);font-weight:900;font-size:clamp(30px,4.6vw,56px);line-height:1.02;letter-spacing:-.03em}
+.punch em{font-style:normal;background:var(--acide);color:var(--on-acide);padding:0 .08em}
+/* test */
+.test{display:grid;grid-template-columns:1fr 1.2fr;gap:48px;align-items:start}
+@media (max-width:860px){.test{grid-template-columns:1fr}}
+form{display:flex;flex-direction:column;gap:20px;background:var(--raised);padding:28px;border:1px solid var(--line)}
+.field{display:flex;flex-direction:column;gap:8px}
+.field label{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.hm{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.hm input{width:84px;padding:10px 12px;font:700 22px var(--sans);background:var(--bg);color:var(--fg);border:2px solid var(--line-strong);font-variant-numeric:tabular-nums}
+.hm span{font-family:var(--mono);color:var(--muted)}
+.meter{display:flex;flex-direction:column;gap:12px;min-width:0}
+.meter .time{font-weight:900;font-size:clamp(72px,11vw,128px);line-height:.85;letter-spacing:-.05em;font-variant-numeric:tabular-nums}
+.meter .time.over{color:var(--notif-text)}
+.bar{display:grid;grid-template-columns:repeat(12,1fr);gap:4px;height:22px;margin-top:8px}
+.bar i{background:var(--line)}
+.bar i.on{background:var(--fg)}
+.bar i.over{background:var(--notif-text)}
+.legend{position:relative;display:flex;justify-content:space-between;font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);height:18px}
+.legend .lim{position:absolute;transform:translateX(-50%);color:var(--fg)}
+.verdict{font-size:20px;font-weight:700;max-width:46ch}
+.example{font-family:var(--mono);font-size:12px;color:var(--muted)}
+/* réflexes */
+.calme{background:var(--calme);color:var(--on-calme);border-bottom:none}
+.calme .kicker{color:var(--on-calme);opacity:.8}
+.tips{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.tips li{display:grid;grid-template-columns:56px 1fr;gap:16px;padding-block:22px;border-top:2px solid rgba(242,239,232,.35)}
+.tips li:last-child{border-bottom:2px solid rgba(242,239,232,.35)}
+.tips .n{font-family:var(--mono);font-weight:600;color:var(--acide)}
+.tips strong{display:block;font-size:clamp(22px,3vw,32px);font-weight:800;letter-spacing:-.02em;line-height:1.1}
+.tips span.d{display:block;margin-top:6px;opacity:.85;max-width:60ch}
+.calme .mark{color:var(--on-acide)}
+/* campagne */
+.name{font-size:clamp(28px,8.4vw,104px)}
+.parts{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px}
+@media (max-width:760px){.parts{grid-template-columns:1fr}}
+.parts div{border-top:4px solid var(--c);padding-top:14px;min-width:0}
+.parts strong{font-size:28px;font-weight:900}
+.parts p{color:var(--muted)}
+.swatches{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:56px}
+@media (max-width:760px){.swatches{grid-template-columns:1fr}}
+.sw{padding:22px;min-height:180px;display:flex;flex-direction:column;justify-content:space-between}
+.sw .hex{font-family:var(--mono);font-size:13px}
+.sw strong{font-size:28px;font-weight:900;letter-spacing:-.02em}
+.supports{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:56px}
+@media (max-width:760px){.supports{grid-template-columns:1fr}}
+.sup{border:1px solid var(--line-strong);padding:28px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.sup p{color:var(--muted)}
+/* footer */
+footer{padding-block:72px 48px}
+footer .slogan{font-weight:900;font-size:clamp(40px,7vw,88px);line-height:.92;letter-spacing:-.045em}
+.credits{margin-top:56px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:2px solid var(--fg);padding-top:18px}
+.credits .wm{font-size:20px}
+</style>
+<style>img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<header class="top">
+<div class="wrap">
+<a class="wm" href="#accueil" aria-label="tel_lement addict, accueil"><span>tel</span><i></i><span>lement</span><b>addict</b></a>
+<nav aria-label="Sections">
+<a href="#constat">le constat</a>
+<a href="#mecanique">la mécanique</a>
+<a href="#test">le test</a>
+<a href="#reflexes">les réflexes</a>
+<a href="#campagne">la campagne</a>
+</nav>
+</div>
+</header>
+<main id="accueil">
+<section class="hero">
+<div class="wrap grid">
+<div class="full">
+<p class="kicker">23:47 · encore une ?</p>
+<h1>ne laissez pas l'algo <span class="mark">scroller</span> votre vie<span class="us" aria-hidden="true"></span></h1>
+</div>
+<div style="display:flex;flex-direction:column;gap:24px;min-width:0">
+<p class="lead">tel_lement addict est une campagne de sensibilisation sur l'emprise des algorithmes des réseaux sociaux. On ne vous dit pas de jeter votre téléphone. On vous montre comment le fil est conçu pour vous retenir, et comment reprendre la main.</p>
+<div class="ctas">
+<a class="btn btn-notif" href="#test">fais le test</a>
+<a class="btn btn-ghost" href="https://www.instagram.com/tel_lement_addict/" target="_blank" rel="noopener">suivre @tel_lement_addict</a>
+</div>
+</div>
+<div class="side" aria-label="Exemple de notification détournée">
+<div class="notif">
+<div class="nh"><span class="dot"></span>algorithme<span class="t">maintenant</span></div>
+<strong>Encore une ? Celle-là, tu vas l'adorer.</strong>
+<span class="b">On a trouvé 400 vidéos comme la dernière.</span>
+</div>
+<div class="notif me">
+<div class="nh"><span class="dot" style="background:var(--calme)"></span>toi<span class="t">maintenant</span></div>
+<strong>Non. Je pose le téléphone_</strong>
+</div>
+</div>
+</div>
+</section>
+<section id="constat">
+<div class="wrap">
+<div class="head">
+<p class="kicker">le constat</p>
+<h2>un produit fabriqué pour qu'on ne le lâche pas<span class="us" aria-hidden="true"></span></h2>
+</div>
+<div class="facts">
+<div style="min-width:0">
+<p class="kicker">15-24 ans · vidéos regardées par jour</p>
+<p class="big">5h21</p>
+<div class="rows">
+<p>dont environ 2 h sur les réseaux sociaux<span>soit plus de 14 heures par semaine</span></p>
+<p>mesuré pour l'Arcom par Médiamétrie et CSA<span>étude publiée en novembre 2025</span></p>
+</div>
+</div>
+<blockquote>
+<p class="kicker">commission d'enquête de l'Assemblée nationale sur TikTok · septembre 2025</p>
+<p class="q">« une machine algorithmique infernale <span class="mark">conçue pour capter l'attention</span> »</p>
+<p style="color:var(--muted)">Arthur Delaporte, président de la commission, après quatre mois de travaux et 178 personnes auditionnées.</p>
+<div class="props">
+<p>proposition : pas de réseaux sociaux avant 15 ans</p>
+<p>proposition : un couvre-feu numérique de 22 h à 8 h pour les 15-18 ans</p>
+</div>
+</blockquote>
+</div>
+<p class="src">Sources : <a href="https://www.brut.media/fr/articles/les-15-24-ans-regardent-5h21-de-videos-par-jour" target="_blank" rel="noopener">Brut / AFP d'après l'Arcom</a> · <a href="https://lcp.fr/actualites/commission-d-enquete-tiktok-on-a-vu-un-ocean-de-contenus-nefastes-temoigne-la" target="_blank" rel="noopener">LCP, 11 septembre 2025</a></p>
+</div>
+</section>
+<section id="mecanique">
+<div class="wrap">
+<div class="head">
+<p class="kicker">la mécanique</p>
+<h2>trois ingrédients pour vous retenir<span class="us" aria-hidden="true"></span></h2>
+</div>
+<div class="cards">
+<article class="card" style="--c:var(--notif)">
+<span class="tag">ingrédient · le scroll infini</span>
+<h3>il n'y a plus de bas de page</h3>
+<p>Avant, une page avait une fin et il fallait cliquer sur « page suivante ». Le défilement infini, inventé vers 2006 par le designer Aza Raskin, recharge le contenu tout seul. Sans fin de page, plus de moment naturel pour s'arrêter. Son inventeur dit aujourd'hui le regretter.</p>
+</article>
+<article class="card" style="--c:var(--acide)">
+<span class="tag">ingrédient · la recommandation</span>
+<h3>il observe chaque seconde</h3>
+<p>L'algorithme mesure combien de temps vous restez sur une vidéo, si vous la revoyez, si vous la passez. Il en déduit ce qui vous retient, et vous en propose encore plus.</p>
+</article>
+<article class="card" style="--c:var(--fg)">
+<span class="tag">ingrédient · la récompense</span>
+<h3>chaque vidéo est une surprise</h3>
+<p>Parfois ennuyeuse, parfois géniale : c'est ce qui donne envie de passer à la suivante. Pour la Commission européenne, ces « récompenses constantes » font passer les utilisateurs en « pilote automatique ».</p>
+</article>
+</div>
+<div class="inst">
+<div>
+<p class="kicker">Commission européenne · enquête ouverte en février 2024</p>
+<h3>TikTok ignore les signes d'usage compulsif, comme le scroll la nuit</h3>
+<p>Elle lui demande d'adapter le scroll infini et d'imposer de vraies pauses, sous peine d'une amende pouvant atteindre 6 % de son chiffre d'affaires mondial.</p>
+</div>
+<div>
+<p class="kicker">commission écrans · rapport d'avril 2024</p>
+<h3>pas d'«&nbsp;addiction aux écrans&nbsp;» reconnue par la science…</h3>
+<p>… mais des produits conçus « avec des composantes addictogènes », et des « bulles algorithmiques » qui enferment.</p>
+</div>
+</div>
+<p class="punch">le problème, ce n'est pas vous. <em>c'est la machine.</em></p>
+<p class="src">Sources : <a href="https://raskincenter.org/ideas/aza-raskin-infinite-scroll/" target="_blank" rel="noopener">Raskin Center</a> · <a href="https://www.matheson.com/insights/eu-commission-finds-platforms-addictive-design-breaches-dsa/" target="_blank" rel="noopener">Matheson, février 2026</a> · <a href="https://www.info.gouv.fr/actualite/pas-decran-avant-trois-ans" target="_blank" rel="noopener">info.gouv.fr</a></p>
+</div>
+</section>
+<section id="test">
+<div class="wrap">
+<div class="head">
+<p class="kicker">le test</p>
+<h2>combien de temps aujourd'hui ?<span class="us" aria-hidden="true"></span></h2>
+<p class="lead">Ouvrez « Temps d'écran » (iPhone) ou « Bien-être numérique » (Android), regardez le temps passé sur les réseaux, et comparez-le à la limite que vous voudriez vous fixer.</p>
+</div>
+<div class="test">
+<form id="f" novalidate>
+<div class="field">
+<label for="th">temps passé aujourd'hui</label>
+<div class="hm">
+<input id="th" type="number" inputmode="numeric" min="0" max="23" value="2" aria-label="heures"><span>h</span>
+<input id="tm" type="number" inputmode="numeric" min="0" max="59" value="47" aria-label="minutes"><span>min</span>
+</div>
+</div>
+<div class="field">
+<label for="lh">ma limite</label>
+<div class="hm">
+<input id="lh" type="number" inputmode="numeric" min="0" max="23" value="1" aria-label="heures de limite"><span>h</span>
+<input id="lm" type="number" inputmode="numeric" min="0" max="59" value="0" aria-label="minutes de limite"><span>min</span>
+</div>
+</div>
+<p class="example" id="ex">valeurs d'exemple : remplacez-les par les vôtres.</p>
+</form>
+<div class="meter" aria-live="polite">
+<p class="kicker">temps de scroll</p>
+<p class="time" id="time">02:47</p>
+<div class="bar" id="bar" role="img" aria-label="jauge du temps passé par rapport à la limite"></div>
+<div class="legend"><span>0</span><span class="lim" id="limlabel">ta limite</span><span id="maxlabel">3 h</span></div>
+<p class="verdict" id="verdict"></p>
+</div>
+</div>
+</div>
+</section>
+<section id="reflexes" class="calme">
+<div class="wrap">
+<div class="head">
+<p class="kicker">et maintenant ? trois réflexes</p>
+<h2>toi, <span class="mark">tu peux</span>.<span class="us" aria-hidden="true" style="background:var(--acide)"></span></h2>
+</div>
+<ol class="tips">
+<li><span class="n">01</span><div><strong>coupe les notifs des réseaux</strong><span class="d">Chaque notification est une invitation à rouvrir l'application. Sans elles, c'est vous qui décidez quand y aller.</span></div></li>
+<li><span class="n">02</span><div><strong>le téléphone dort hors de ta chambre</strong><span class="d">Un réveil classique, et le scroll de 23 h n'a plus d'occasion de commencer.</span></div></li>
+<li><span class="n">03</span><div><strong>fixe-toi une limite dans les réglages</strong><span class="d">« Temps d'écran » sur iPhone, « Bien-être numérique » sur Android : la pause arrive avant que le fil ne décide pour vous.</span></div></li>
+</ol>
+<div style="margin-top:40px"><a class="btn btn-ghost" style="color:var(--on-calme);border-color:var(--on-calme)" href="#test">refaire le test</a></div>
+</div>
+</section>
+<section id="campagne">
+<div class="wrap">
+<div class="head">
+<p class="kicker">la campagne</p>
+<h2 class="name"><span class="wm" style="font-size:1em"><span>tel</span><i></i><span>lement</span><b>addict</b></span></h2>
+</div>
+<div class="parts">
+<div style="--c:var(--fg)"><strong>tel</strong><p>comme téléphone.</p></div>
+<div style="--c:var(--notif)"><strong style="color:var(--notif-text)">_</strong><p>le curseur qui clignote : la machine qui attend votre prochain scroll. Et l'espace vide où l'on pose le téléphone.</p></div>
+<div style="--c:var(--acide)"><strong>tellement</strong><p>tellement accro, sans même s'en rendre compte.</p></div>
+</div>
+<div class="swatches" aria-label="les trois couleurs de la campagne">
+<div class="sw" style="background:var(--notif);color:var(--on-notif)"><span class="hex">#FF4A1C</span><div><strong>rouge-notif</strong><p>l'appel, l'alerte</p></div></div>
+<div class="sw" style="background:var(--acide);color:var(--on-acide)"><span class="hex">#D4FF3A</span><div><strong>jaune-acide</strong><p>le piège, l'écran qui éblouit</p></div></div>
+<div class="sw" style="background:var(--calme);color:var(--on-calme)"><span class="hex">#2F6B57</span><div><strong>vert hors-ligne</strong><p>la sortie, la solution</p></div></div>
+</div>
+<div class="supports">
+<div class="sup">
+<p class="kicker">support 1</p>
+<h3>Instagram · @tel_lement_addict</h3>
+<p>Des posts avec une phrase courte et un mot surligné, des stories avec de fausses notifications de l'algorithme et des sondages. On va chercher les jeunes là où ils passent leurs deux heures par jour.</p>
+<div><a class="btn btn-notif" href="https://www.instagram.com/tel_lement_addict/" target="_blank" rel="noopener">voir le compte</a></div>
+</div>
+<div class="sup">
+<p class="kicker">support 2</p>
+<h3>ce site</h3>
+<p>Instagram attire l'attention ; le site prend le temps d'expliquer. Chaque post renvoie ici, et le site renvoie vers le compte.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer>
+<div class="wrap">
+<p class="slogan">ne laissez pas l'algo <span class="mark">scroller</span> votre vie<span class="us" aria-hidden="true"></span></p>
+<div class="credits">
+<span class="wm"><span>tel</span><i></i><span>lement</span><b>addict</b></span>
+<span class="mono" style="font-size:13px;color:var(--muted)">campagne de sensibilisation · projet scolaire de Romain, Sinan et Ambroise</span>
+</div>
+</div>
+</footer>
+<script>
+(function(){
+var ids=['th','tm','lh','lm'];
+var bar=document.getElementById('bar');
+for(var i=0;i<12;i++){bar.appendChild(document.createElement('i'));}
+var touched=false;
+function num(id,max){var v=parseInt(document.getElementById(id).value,10);if(isNaN(v)||v<0)v=0;return Math.min(v,max);}
+function pad(n){return (n<10?'0':'')+n;}
+function fmt(m){var h=Math.floor(m/60),r=m%60;return r?h+' h '+pad(r):h+' h';}
+function update(){
+var t=num('th',23)*60+num('tm',59);
+var l=num('lh',23)*60+num('lm',59);
+var limit=Math.max(l,15);
+var maxM=Math.max(limit*3,t,60);
+var per=maxM/12, filled=Math.min(12,Math.ceil(t/per)), limSeg=Math.round(limit/per);
+var cells=bar.children;
+for(var i=0;i<12;i++){cells[i].className=i<filled?(i>=limSeg?'over':'on'):'';}
+var time=document.getElementById('time');
+time.textContent=pad(Math.floor(t/60))+':'+pad(t%60);
+time.classList.toggle('over',t>l);
+var lim=document.getElementById('limlabel');
+lim.style.left=Math.min(88,Math.max(12,limSeg/12*100))+'%';
+lim.textContent='limite '+fmt(l);
+document.getElementById('maxlabel').textContent=fmt(Math.round(maxM));
+var v=document.getElementById('verdict');
+if(t<=l){v.textContent='Dans ta limite. Le fil, lui, continue sans toi : c’est très bien comme ça.';}
+else{v.textContent=fmt(t-l)+' au-dessus de ta limite. Ce temps-là, c’est le fil qui l’a choisi pour toi.';}
+if(touched){document.getElementById('ex').hidden=true;}
+}
+ids.forEach(function(id){document.getElementById(id).addEventListener('input',function(){touched=true;update();});});
+document.getElementById('f').addEventListener('submit',function(e){e.preventDefault();});
+update();
+})();
+</script>
+</body>
+</html>
