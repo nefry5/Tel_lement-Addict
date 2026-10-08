@@ -1,0 +1,10 @@
+{
+  "name": "tellementaddict",
+  "private": true,
+  "engines": { "node": ">=18" },
+  "dependencies": {
+    "@resvg/resvg-js": "2.6.2",
+    "jpeg-js": "0.4.4",
+    "satori": "0.10.14"
+  }
+}
